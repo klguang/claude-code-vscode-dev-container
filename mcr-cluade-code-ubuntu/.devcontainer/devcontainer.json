@@ -1,0 +1,8 @@
+{
+  "name": "Claude Code 无值守环境",
+  "build": { "dockerfile": "Dockerfile" },
+  // 直接加载项目根目录的.env作为环境变量，密钥无需硬编码
+  "runArgs": ["--env-file", "${localWorkspaceFolder}/.env"],
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash .devcontainer/setup-proxy.sh"
+}
