@@ -29,11 +29,10 @@ RUN if ! id -u vscode > /dev/null 2>&1; then \
 ENV HOME=/home/vscode
 USER vscode
 
-# ==================== 新增：预配置Claude无人值守模式（固化到镜像） ====================
+# 静态默认值放镜像里；按工作区路径变化的 trust 状态由 setup-claude.sh 在运行时写入。
 RUN mkdir -p ~/.claude \
     # 单引号包裹JSON无需转义，更不易出错
     && echo '{"permissions": {"defaultMode": "bypassPermissions"}}' > ~/.claude/settings.json \
     && echo '{"hasCompletedOnboarding": true}' > ~/.claude.json
-# ================================================================================
 
 WORKDIR /workspace

@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+# trust 是按工作区路径存储的，必须在容器启动后按当前 workspace 写入。
 workspace_path="${1:-${PWD}}"
 
 node - "$workspace_path" <<'NODE'

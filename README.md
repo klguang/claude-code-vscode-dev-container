@@ -7,6 +7,8 @@
 - 默认启用 Claude Code 无人值守模式
 - 免登录，可直接在 `.env` 配置第三方兼容网关的 API Key
 - 更适合中国大陆用户
+- `Reopen in Container` 后自动在容器侧安装 `Claude Code` 扩展
+- 容器启动时自动预信任当前工作区，避免首次手动确认 trust
 
 ## 模板
 
@@ -24,8 +26,9 @@
 1. 选择一个模板目录
 2. 将 `.env.example` 复制为 `.env`
 3. 填写 API、模型和代理
-4. 在 VS Code 中执行 `Dev Containers: Reopen in Container`
-5. 在容器终端运行 `claude`
+4. 在 VS Code 中执行 `Dev Containers: Rebuild and Reopen in Container`
+5. 等待容器初始化，并等待 `Claude Code` 扩展自动安装到 `Dev Container` 侧
+6. 直接使用 VS Code 的 Claude Code 面板，或在容器终端运行 `claude`
 
 ## `.env` 示例
 
@@ -47,4 +50,13 @@ HTTPS_PROXY=http://host.docker.internal:33210
 - `.env` 只能写 `KEY=VALUE`
 - Git 代理会在容器创建后自动同步
 - 当前代理只覆盖容器运行期，不覆盖 Docker build 阶段
+- 修改 `.devcontainer` 配置后，需要执行 `Dev Containers: Rebuild Container`
 - 适合可信仓库，不建议直接用于不受信任的外部项目
+
+## 容器侧初始化说明
+
+- 模板已通过 `devcontainer.json` 预装 `anthropic.claude-code`
+- `setup-proxy.sh` 只负责同步 Git 代理设置
+- `setup-claude.sh` 只负责按当前工作区路径写入 Claude trust 状态
+- Dockerfile 中的 Claude 初始化只写静态默认值，例如 `permissions.defaultMode` 和 `hasCompletedOnboarding`
+- 当前工作区路径只有在容器启动时才能确定，所以 trust 不能只写在 Dockerfile 中
