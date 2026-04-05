@@ -5,7 +5,7 @@
 特点：
 
 - 使用中国镜像源，构建镜像更快，更适合中国大陆用户
-- 默认启用 Claude Code 无人值守模式
+- 默认启用 Claude Code 无人值守模式（`bypassPermissions`）
 - 免登录，可直接在 `.env` 配置第三方兼容网关的认证令牌
 - `Reopen in Container` 后自动在容器侧安装 `Claude Code` 扩展
 - 容器启动时自动预信任当前工作区，避免首次手动确认 trust
@@ -19,7 +19,7 @@
 
 - `mcr.m.daocloud.io` 是 DaoCloud 提供的 MCR 国内镜像加速地址，用于加速拉取基础镜像
 - 阿里云 APT 源
-- Claude Code 无人值守
+- Claude Code 无人值守（`bypassPermissions`）
 
 ## 使用
 
