@@ -32,7 +32,7 @@ USER vscode
 # 静态默认值放镜像里；按工作区路径变化的 trust 状态由 setup-claude.sh 在运行时写入。
 RUN mkdir -p ~/.claude \
     # 单引号包裹JSON无需转义，更不易出错
-    && echo '{"permissions": {"defaultMode": "bypassPermissions"}}' > ~/.claude/settings.json \
+    && echo '{"permissions":{"defaultMode":"bypassPermissions"},"skipDangerousModePermissionPrompt":true}' > ~/.claude/settings.json \
     && echo '{"hasCompletedOnboarding": true}' > ~/.claude.json
 
 WORKDIR /workspace

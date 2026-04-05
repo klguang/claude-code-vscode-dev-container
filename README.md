@@ -5,7 +5,7 @@
 特点：
 
 - 默认启用 Claude Code 无人值守模式
-- 免登录，可直接在 `.env` 配置第三方兼容网关的 API Key
+- 免登录，可直接在 `.env` 配置第三方兼容网关的认证令牌
 - 更适合中国大陆用户
 - `Reopen in Container` 后自动在容器侧安装 `Claude Code` 扩展
 - 容器启动时自动预信任当前工作区，避免首次手动确认 trust
@@ -33,7 +33,7 @@
 ## `.env` 示例
 
 ```env
-ANTHROPIC_API_KEY=your_key
+ANTHROPIC_AUTH_TOKEN=your_api_key
 ANTHROPIC_MODEL=ark-code-latest
 ANTHROPIC_BASE_URL=https://ark.cn-beijing.volces.com/api/coding
 HTTP_PROXY=http://host.docker.internal:33210
@@ -48,6 +48,8 @@ HTTPS_PROXY=http://host.docker.internal:33210
 注意：
 
 - `.env` 只能写 `KEY=VALUE`
+- 认证变量已切换为 `ANTHROPIC_AUTH_TOKEN`
+- 如果继续使用 `ANTHROPIC_API_KEY`，Claude Code 会按当前官方行为弹出自定义 API Key 确认提示
 - Git 代理会在容器创建后自动同步
 - 当前代理只覆盖容器运行期，不覆盖 Docker build 阶段
 - 修改 `.devcontainer` 配置后，需要执行 `Dev Containers: Rebuild Container`
@@ -58,5 +60,6 @@ HTTPS_PROXY=http://host.docker.internal:33210
 - 模板已通过 `devcontainer.json` 预装 `anthropic.claude-code`
 - `setup-proxy.sh` 只负责同步 Git 代理设置
 - `setup-claude.sh` 只负责按当前工作区路径写入 Claude trust 状态
-- Dockerfile 中的 Claude 初始化只写静态默认值，例如 `permissions.defaultMode` 和 `hasCompletedOnboarding`
+- Dockerfile 中的 Claude 初始化只写静态默认值，例如 `permissions.defaultMode`、`skipDangerousModePermissionPrompt` 和 `hasCompletedOnboarding`
+- 模板默认仍使用 `bypassPermissions`，并预写跳过风险确认提示的用户设置
 - 当前工作区路径只有在容器启动时才能确定，所以 trust 不能只写在 Dockerfile 中
