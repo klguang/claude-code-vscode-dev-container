@@ -17,7 +17,7 @@
 
 两份模板都已配置：
 
-- `mcr.m.daocloud.io` 基础镜像
+- `mcr.m.daocloud.io` 是 DaoCloud 提供的 MCR 国内镜像加速地址，用于加速拉取基础镜像
 - 阿里云 APT 源
 - Claude Code 无人值守
 
