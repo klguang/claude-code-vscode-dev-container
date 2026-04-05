@@ -20,7 +20,12 @@ RUN apt-get update -o Acquire::Retries=3 \
     curl \
     ca-certificates \
     tmux \
+    tzdata \
+    && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo Asia/Shanghai > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Asia/Shanghai
 
 # 安装 Node
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash \

@@ -16,7 +16,12 @@ RUN apt-get update -o Acquire::Retries=3 \
     zip \
     curl \
     ca-certificates \
+    tzdata \
+    && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo Asia/Shanghai > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Asia/Shanghai
 
 # 全局安装最新版Claude Code
 RUN npm install -g @anthropic-ai/claude-code@latest

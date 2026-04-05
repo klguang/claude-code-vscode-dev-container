@@ -6,7 +6,7 @@
 
 - 默认启用 Claude Code 无人值守模式
 - 免登录，可直接在 `.env` 配置第三方兼容网关的认证令牌
-- 更适合中国大陆用户
+- 使用中国镜像源，构建镜像更快，更适合中国大陆用户
 - `Reopen in Container` 后自动在容器侧安装 `Claude Code` 扩展
 - 容器启动时自动预信任当前工作区，避免首次手动确认 trust
 
@@ -62,4 +62,5 @@ HTTPS_PROXY=http://host.docker.internal:33210
 - `setup-claude.sh` 只负责按当前工作区路径写入 Claude trust 状态
 - Dockerfile 中的 Claude 初始化只写静态默认值，例如 `permissions.defaultMode`、`skipDangerousModePermissionPrompt` 和 `hasCompletedOnboarding`
 - 模板默认仍使用 `bypassPermissions`，并预写跳过风险确认提示的用户设置
+- 模板默认把容器时区设为 `Asia/Shanghai`
 - 当前工作区路径只有在容器启动时才能确定，所以 trust 不能只写在 Dockerfile 中
