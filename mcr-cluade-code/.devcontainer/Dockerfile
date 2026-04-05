@@ -1,4 +1,5 @@
 FROM mcr.m.daocloud.io/devcontainers/typescript-node:4-24-trixie
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN rm -f /etc/apt/sources.list.d/debian.sources \
  && printf "deb https://mirrors.aliyun.com/debian/ trixie main contrib non-free non-free-firmware\n\
@@ -8,7 +9,8 @@ deb https://mirrors.aliyun.com/debian-security trixie-security main contrib non-
  && apt-get update
 
 # 安装常用工具 + 依赖
-RUN apt-get install -y \
+RUN apt-get update -o Acquire::Retries=3 \
+ && apt-get install -y \
     git \
     wget \
     zip \

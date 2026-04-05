@@ -1,4 +1,5 @@
 FROM mcr.m.daocloud.io/devcontainers/base:ubuntu-24.04
+ARG DEBIAN_FRONTEND=noninteractive
 
 # APT 源换成国内镜像
 RUN rm -f /etc/apt/sources.list.d/ubuntu.sources \
@@ -10,7 +11,8 @@ deb https://mirrors.aliyun.com/ubuntu/ noble-backports main restricted universe 
  && apt-get update
 
 # 安装常用工具 + 依赖
-RUN apt-get install -y \
+RUN apt-get update -o Acquire::Retries=3 \
+ && apt-get install -y \
     vim \
     git \
     wget \
@@ -22,7 +24,8 @@ RUN apt-get install -y \
 
 # 安装 Node
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash \
- && apt-get install -y nodejs
+ && apt-get install -y nodejs \
+ && rm -rf /var/lib/apt/lists/*
 RUN npm config set registry https://registry.npmmirror.com
 
 # 安装 TypeScript 
